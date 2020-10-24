@@ -1,6 +1,6 @@
 ---
 title: "As principais razões pelas quais você deve dar uma chance ao eBPF"
-date: 2020-09-01T18:51:01+02:00
+date: 2020-10-24T18:51:01+02:00
 draft: false
 ---
 
