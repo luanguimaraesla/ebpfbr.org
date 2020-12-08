@@ -1,50 +1,78 @@
-publishDir = "docs/"
+# Site settings
+baseurl = "https://ebpfbr.org"
+languageCode = "en"
+title = "eBPF Brasil"
+theme = "hugo-theme-cactus-plus"
+googleAnalytics = ""
 
-baseURL = "https://ebpfbr.org"
-languageCode = "pt-BR"
-defaultContentLanguage = "pt"
-title = "eBPF BR"
-enableRobotsTXT = true
-theme = "compose"
-enableGitInfo = true
-
-disableKinds = ["taxonomy", "taxonomyTerm"]
-
-#  menu items
-[[menu.main]]
-    name = "Docs"
-    weight = 2
-    url = "docs/"
-
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
-  [markup.highlight]
-    codeFences = true
-    guessSyntax = false
-    hl_Lines = ""
-    lineNoStart = 1
-    lineNos = true
-    lineNumbersInTable = true
-    noClasses = false
-    style = "monokai"
-    tabWidth = 2
-
-# Everything below this are Site Params
+# Set the value to true if your site include CJK (Chinese, Japanese, and Korean languages) characters
+hasCJKLanguage = false
 
 [params]
-  author = "Luan Guimarães"
-  searchPlaceholder = "Search the docs ..."
-  repo = "https://github.com/luanguimaraesla/ebpfbr.org"
+	author = "eBPF Brasil"
+	description = "Comunidade Brasileira do eBPF"
+	bio = "Compartilhando em português a tecnologia que está revolucionando o universo Linux"
 
-  time_format_blog = "Monday, January 02, 2006"
-  time_format_default = "January 2, 2006"
-  [params.logo]
-    lightMode = "logo.png"
-    darkMode = "logo.png"
+	twitter = ""
+	facebook = ""
 
-  [params.source]
-    name = "GitHub"
-    icon = "github.svg"
-    url = "https://github.com/luanguimaraesla/ebpfbr.org"
+	enableRSS = true
+	enableToc = true
+
+	enableDisqus = false
+	disqusShortname = "your_disqus_short_name"
+
+
+	enableSummary = true
+	# Set the value to true if use description in post front matter replace content summary
+	useDescriptionReplaceSummary = false
+
+
+	enableGoogleAnalytics = false
+	enableBaiduAnalytics = false
+	# Set the value to your baidu analysis code if you want to use baidu analytics
+	baiduAnalytics = 'your_baidu_analysis_code'
+
+	enableTwitterCard = false
+	# The url for twitter card image, default is avatar.png in static/images directory
+	twitterCardImage = ""
+
+	# Add custom assets with their paths relative to the static folder
+	customCSS = ["assets/header.css"]
+	customJS  = []
+
+	# The variables below are optionally too and can be used to
+	# translate or customize each string of the theme.
+
+	# Navigation links
+	home = ""
+	about = ""
+	archive = ""
+	subscribe = ""
+
+	olderPosts = ""
+	newerPosts = ""
+	copyright = ""
+
+	# show latest posts in single page
+	showLatestPosts = false
+	readMore = ""
+
+	# Share
+	enableShare = true
+	tweet = ""
+	share = ""
+
+	# 404 page
+	title404 = ""
+	subtitle404 = ""
+
+	# Choose a font for the social icons in the footer. Either "mono-social" or "font-awesome"
+	iconFont = "font-awesome"
+  # The social icons can be styled differently if you use mono as font - circle, rounded, or empty
+  socialIconStyle = ""
+
+
+# Add additional social link entries underneath
+[social]
+	github-square = "https://www.github.com/luanguimaraesla/ebpfbr.org"
