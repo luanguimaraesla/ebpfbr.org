@@ -1,7 +1,7 @@
 publishDir = "docs/"
 
 # Site settings
-baseurl = "https://ebpfbr.org"
+baseurl = "https://ebpfbr.org/"
 languageCode = "en"
 title = "eBPF Brasil"
 theme = "hugo-theme-cactus-plus"
