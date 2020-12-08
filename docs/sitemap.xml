@@ -3,11 +3,68 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ebpfbr.org/posts/ebpf-reasons/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/categories/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/tags/cilium/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/categories/development/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/tags/ebpf/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ebpfbr.org/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/tags/falco/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/tags/hubble/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/tags/infrastructure/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/posts/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/tags/prometheus/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://ebpfbr.org/tags/</loc>
+    <lastmod>2020-10-24T18:51:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ebpfbr.org/about/</loc>
+    <lastmod>2015-06-20T14:02:37+02:00</lastmod>
   </url>
   
 </urlset>
