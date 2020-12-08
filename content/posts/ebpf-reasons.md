@@ -1,12 +1,28 @@
 ---
-title: "As principais razões pelas quais você deve dar uma chance ao eBPF"
+author: "Lucas Severo"
 date: 2020-10-24T18:51:01+02:00
-draft: false
+title: "As principais razões pelas quais você deve dar uma chance ao eBPF"
+title: "As principais razões pelas quais você deve dar uma chance ao eBPF"
+description: This tutorial will show you how to create a simple theme in Hugo.
+weight: 10
+categories:
+- development
+tags:
+- ebpf
+- cilium
+- hubble
+- falco
+- prometheus
+- infrastructure
+menu: main
 ---
 
-*Adaptado de https://blog.container-solutions.com/the-top-reasons-why-you-should-give-ebpf-a-chance*
 
-Com esta postagem, queremos mostrar por que eBPF é importante e por que desperta tanto interesse de um tempo pra cá. Não vou entrar em detalhes sobre como o eBPF funciona, mas sim destacar as razões pelas quais há empolgamento em torno dele.
+Com esta postagem, queremos mostrar por que eBPF é importante e por que desperta tanto interesse de um tempo pra cá. Não vamos entrar em detalhes sobre como o eBPF funciona, mas sim destacar as razões pelas quais há empolgação em torno dele.
+
+<!--more-->
+
+*Adaptado de https://blog.container-solutions.com/the-top-reasons-why-you-should-give-ebpf-a-chance*
 
 Eu gostaria de lhe dar uma explicação básica do que é o eBPF antes de dar razões para se entusiasmar com ele. Se você já tem um conhecimento geral do funcionamento do eBPF, pode pular esta seção e ir para a próxima.
 
@@ -37,11 +53,11 @@ Depois de medir quaisquer dados dessas fontes de eventos, o programa pode então
 
 Agora que você tem uma compreensão geral do que é o eBPF, vamos voltar ao porquê de dar uma chance a ele.
 
-# Razão nº 1: Às vezes, apenas o eBPF resolve o problema
+## Razão nº 1: _Às vezes, apenas o eBPF resolve o problema_
 
 Embora possa parecer um exagero, o eBPF pode ser a melhor solução para diagnosticar e resolver vários problemas, devido à especificidade ou sobrecarga de desempenho.
 
-## Rastreamento muito específico.
+**Rastreamento muito específico**
 
 Esta anedota é um ótimo exemplo de eBPF resolvendo algo muito específico. Tudo começa com o seguinte tweet da engenheira de software Julia Evans:
 
@@ -60,7 +76,7 @@ Eu gostaria de apontar algumas coisas interessantes sobre isso. O Tcplife mostra
 
 Como Brendan Gregg disse em algumas de suas palestras, construir coisas em torno do eBPF é como ter superpoderes ocultos. Você só precisa fazer as perguntas certas para fazer algo interessante sair disso.
 
-## eBPF provê rastreamento (*tracing*) sem interromper produção.
+**eBPF provê rastreamento (*tracing*) sem interromper produção.**
 
 Quando eu estava aprendendo mais sobre Linux, e mais especificamente sobre a depuração em *user space*, strace era um comando muito interessante para jogar em todos os lugares para entender quais chamadas de sistema estão sendo disparadas.
 
@@ -76,15 +92,15 @@ Em sua postagem, Brendan Gregg sugere algumas outras ferramentas no final, lista
 
 Usar trace.py do BCC adiciona um pouco de complexidade porque seu kernel precisa ser recente, você precisa ter as ferramentas BCC instaladas e precisa entender seus argumentos cli. Todavia, terá muito mais desempenho e gerará menos sobrecarga. Além disso, é mais flexível e poderoso, considerando o que investigar enquanto também considera filtros, pagers de buffer e outras configurações de *tracing*.
 
-# Razão nº 2: Importantes entidades estão usando o eBPF
+## Razão nº 2: _Importantes entidades estão usando o eBPF_
 
 Certamente é um motivo para ficar de olho no eBPF agora. Cilium foi provavelmente a primeira equipe a construir um produto completo em torno de eBPF, na verdade, tanto para observação e controle de rede, mas muitos jogadores de observabilidade têm caminhado nessa direção ultimamente.
 
 Em 2017, Brendan Gregg deu muitas palestras sobre o eBPF e, como vimos em sua citação anterior, ele disse que o eBPF estava em um estágio em que tinha muitos superpoderes ocultos e que precisávamos fazer as perguntas certas para extrair grandes funcionalidades dele. Mas, em 2020, acho que é seguro dizer que, com tantas ferramentas prontas para produção utilizando eBPF, estamos descobrindo seus poderes com maestria!
 
-## Cilium e Hubble
+**Cilium e Hubble**
 
-[Cilium] (https://cilium.io/) é um plug-in cni do Kubernetes um tanto popular, baseado inteiramente no eBPF para fornecer e proteger de forma transparente a conectividade de rede e o balanceamento de carga entre as cargas de trabalho de aplicações. Este diagrama em seu [repositório Github](https://github.com/cilium/cilium) fornece uma idéia sobre como isso é feito.
+[Cilium](https://cilium.io/) é um plug-in cni do Kubernetes um tanto popular, baseado inteiramente no eBPF para fornecer e proteger de forma transparente a conectividade de rede e o balanceamento de carga entre as cargas de trabalho de aplicações. Este diagrama em seu [repositório Github](https://github.com/cilium/cilium) fornece uma idéia sobre como isso é feito.
 
 ![](https://lh5.googleusercontent.com/XXMBRvWcsn7zs4hH0Ck_99X1hiB1uWPJ0RbDYWm8zJ9lU7ImxaTfG_hKU5ZK0qqtQSX8vBlo3_aPt7cmfbGequTIz4XzohpJFiV6iY40zznC5Uq6Dpf1pTwxyPS75c7oLhSYND8G)
 
@@ -97,7 +113,7 @@ Este é um exemplo do mapa de serviço do Hubble:
 
 ![](https://lh5.googleusercontent.com/roeyFXqoa1VPnfshQ5S4u4j5ufPT9hX8CV-2T3PofZFc2u7RhlhVU963ajJg-iBnMkVRmJvzlgc3K1siE9OgMnr-BU7nXFQKfMvfrrpMGieJx2_WKjUf1akW4Cpz1clQDneKiO-_)
 
-## Prometheus eBPF Exporter
+**Prometheus eBPF Exporter**
 
 Cloud Flare abriu o código em 2018 e esse exportador é basicamente o BCC como métricas do Prometheus. Então, em vez de ferramentas CLI que exigiriam que você se conectasse (*ssh*) a uma máquina para rastrear algo, você escreveria programas eBPF e os transformaria em métricas do Prometheus para verificar nos gráficos do Grafana.
 
@@ -108,13 +124,13 @@ Exemplos prontamente disponíveis seriam uso de CPU, uso de memória ou uso de C
 ![](https://lh4.googleusercontent.com/-h7l045RmB81BBl-F9jP8ZcJy8SOUmDxDF55D3MY8NVznq2Lq4sUQ677SzNM2hUM3FXIdLL8bTLgIETABI9xymr9CW_QmyxE1N8SCANXcmbdC8s10hpv_6MYyL5xuFxEoySnztGU)
 
 
-## Falco
+**Falco**
 
 Falco é uma ferramenta de segurança de *runtime*. Tem como objetivo detectar atividades anômalas em nós e containers. Ele monitora brotamento de processos, por exemplo se um contêiner do MongoDB, que deveria ter apenas o processo do MongoDB rodando nele, também tivesse um segundo processo estranho e inesperado em execução; ou até mesmo atividade de rede, tal como se um Nginx abrisse uma porta inesperada em um servidor. Sysdig também fornece um diagrama de arquitetura útil para entendermos melhor a arquitetura do Falco.
 
 ![](https://lh5.googleusercontent.com/b5zHsYkdXrvsvj-PM1RQm1kNTcFE9LrJ1BKmY1FMp9xFCJk_UM6fjbW1JWrYdktNKLSCmu0EKhZ7rBW_CZxhDA__dFt99eP24jF6SVlPZdrAk1Ltj9_vBsfIz1bGZHiYZfbWpKFS)
 
-## Algumas outras entidades
+**Algumas outras entidades**
 
 A lista continua com:
 
@@ -127,7 +143,7 @@ A lista continua com:
 
 Existem algumas outras soluções bem **fechadas** usando eBPF internamente em empresas como Facebook e Netflix, especialmente para firewall de borda XDP substituindo iptables por uma série de razões. A maioria dos projetos se concentra em observabilidade e controle de rede, mas alguns tentam instrumentar outros dados, como Prometheus eBPF Exporter, Falco e Instana.
 
-# Razão nº 3: flexibilidade e velocidade em ter novas ferramentas de *kernel tracing*
+## Razão nº 3: _Flexibilidade e velocidade em ter novas ferramentas de *kernel tracing*_
 
 Este é provavelmente o motivo mais empolgante para o hype em torno do eBPF, na minha opinião. Podemos argumentar que o eBPF é simplesmente o vencedor do rastreamento de kernel.
 
@@ -137,7 +153,7 @@ Temos `ftrace` e` perf_events` como exemplos de ferramentas de rastreamento que 
 
 Outra opção é escrever *kernel modules* personalizados; isso é flexível e dinâmico o suficiente, mas não é seguro porque você pode travar o kernel. Ter a VM do eBPF projetada para executar programas com segurança, sem congelar ou travar o kernel, é uma opção melhor.
 
-# Conclusão
+## Conclusão
 
 Neste post, tentei mostrar brevemente o que empolga no eBPF e algumas das razões para o hype contínuo no cenário de observabilidade. Acho importante mostrar que já temos ferramentas para usá-lo em produção e que eBPF está maduro o suficiente para isso. Como Brendan Gregg disse em uma de suas palestras, você não precisa necessariamente saber tudo sobre o eBPF para ficar animado com ele, mas é bom entender os recursos que ele traz para à mesa.
 
