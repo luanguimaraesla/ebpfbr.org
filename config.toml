@@ -13,7 +13,7 @@ hasCJKLanguage = false
 [params]
 	author = "eBPF Brasil"
 	description = "Comunidade Brasileira do eBPF"
-	bio = "Compartilhando em português a tecnologia que está revolucionando o universo Linux"
+	bio = "Compartilhando a tecnologia que está revolucionando o universo Linux"
 
 	twitter = ""
 	facebook = ""
