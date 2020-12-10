@@ -40,7 +40,7 @@ O código que enviamos do user space para o kernel space é executado com segura
 
 Portanto, essa simples máquina virtual está conectada a alguns *hooks* específicos dentro do kernel. A quantidade de *hooks* para eBPF está aumentando a cada dia por causa de suas [capacidades](https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md). Existem muitos casos de uso possíveis para o eBPF, mas vamos nos concentrar em observabilidade para simplificar a explicação. Aqui está um exemplo de fluxo BPF, do [blog do Brendan Gregg](http://www.brendangregg.com/ebpf.html), um arquiteto de desempenho sênior da Netflix (e um dos principais porta vozes dessa tecnologia).
 
-![](http://www.brendangregg.com/eBPF/linux_ebpf_internals.png)
+![](images/linux_ebpf_internals.png)
 
 Se o código BPF que você escreve for aceito pelo verificador, ele pode ser anexado a algumas fontes de eventos como as da imagem acima:
 

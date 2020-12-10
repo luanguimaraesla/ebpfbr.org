@@ -104,7 +104,7 @@
 <li>e o programa só acessa estruturas apropriadas para seu tipo de programa BPF</li>
 </ul>
 <p>Portanto, essa simples máquina virtual está conectada a alguns <em>hooks</em> específicos dentro do kernel. A quantidade de <em>hooks</em> para eBPF está aumentando a cada dia por causa de suas <a href="https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md">capacidades</a>. Existem muitos casos de uso possíveis para o eBPF, mas vamos nos concentrar em observabilidade para simplificar a explicação. Aqui está um exemplo de fluxo BPF, do <a href="http://www.brendangregg.com/ebpf.html">blog do Brendan Gregg</a>, um arquiteto de desempenho sênior da Netflix (e um dos principais porta vozes dessa tecnologia).</p>
-<p><img src="http://www.brendangregg.com/eBPF/linux_ebpf_internals.png" alt=""></p>
+<p><img src="images/linux_ebpf_internals.png" alt=""></p>
 <p>Se o código BPF que você escreve for aceito pelo verificador, ele pode ser anexado a algumas fontes de eventos como as da imagem acima:</p>
 <ul>
 <li>kprobes: rastreamento dinâmico do kernel.</li>
