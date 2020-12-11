@@ -21,8 +21,8 @@ hasCJKLanguage = false
 	enableRSS = true
 	enableToc = true
 
-	enableDisqus = false
-	disqusShortname = "your_disqus_short_name"
+	enableDisqus = true
+	disqusShortname = "ebpfbr-org"
 
 
 	enableSummary = true
