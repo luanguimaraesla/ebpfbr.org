@@ -52,8 +52,8 @@
                     </h1>
                     <h2 class="headline">
                     Oct 24, 2020 18:51
-                    · 1864 words
-                    · 9 minute read
+                    · 1966 words
+                    · 10 minute read
                       <span class="tags">
                       
                       
@@ -82,7 +82,7 @@
   <ul>
     <li><a href="#razão-nº-1-_às-vezes-apenas-o-ebpf-resolve-o-problema_">Razão nº 1: <em>Às vezes, apenas o eBPF resolve o problema</em></a></li>
     <li><a href="#razão-nº-2-_importantes-entidades-estão-usando-o-ebpf_">Razão nº 2: <em>Importantes entidades estão usando o eBPF</em></a></li>
-    <li><a href="#razão-nº-3-_flexibilidade-e-velocidade-em-ter-novas-ferramentas-de-kernel-tracing_">Razão nº 3: <em>Flexibilidade e velocidade em ter novas ferramentas de <em>kernel tracing</em></em></a></li>
+    <li><a href="#razão-nº-3-_flexibilidade-e-velocidade-em-ter-novas-ferramentas-de-kernel-tracing_">Razão nº 3: <em>Flexibilidade e velocidade em ter novas ferramentas de <em>Kernel tracing</em></em></a></li>
     <li><a href="#conclusão">Conclusão</a></li>
   </ul>
 </nav>
@@ -90,26 +90,28 @@
                   
                 
                 <section id="post-body">
-                    <p>Com esta postagem, queremos mostrar por que eBPF é importante e por que desperta tanto interesse de um tempo pra cá. Não vamos entrar em detalhes sobre como o eBPF funciona, mas sim destacar as razões pelas quais há empolgação em torno dele.</p>
+                    <p>Com este <em>post</em>, queremos mostrar as razões que fazem do eBPF uma importante ferramenta e os motivos que começam a despertar tanto interesse dentro da comunidade do Linux.</p>
 <p><em>Adaptado de <a href="https://blog.container-solutions.com/the-top-reasons-why-you-should-give-ebpf-a-chance">https://blog.container-solutions.com/the-top-reasons-why-you-should-give-ebpf-a-chance</a></em></p>
-<p>Eu gostaria de lhe dar uma explicação básica do que é o eBPF antes de dar razões para se entusiasmar com ele. Se você já tem um conhecimento geral do funcionamento do eBPF, pode pular esta seção e ir para a próxima.</p>
-<p>A ideia por trás do eBPF é que temos uma máquina virtual rodando dentro do kernel do Linux e podemos enviar código para que ele seja executada. Por alguma razão, chamá-lo de máquina virtual torna difícil para que eu visualize, e por isso comecei a chamá-lo de pseudodispositivo programável em minhas anotações (provavelmente devido à minha formação em engenharia eletrônica).</p>
-<p>Imagine um dispositivo que tem &ldquo;sensores&rdquo;, registradores, memória, etc. É programável, então você pode enviar um código que o instruirá sobre o que fazer, como o que sondar e o que relatar. No entanto, este dispositivo é virtual e roda dentro do kernel. É basicamente isso!</p>
-<p>O código que enviamos do user space para o kernel space é executado com segurança no eBPF porque ele tem um verificador que garante as seguintes condições antes de compilar / executar:</p>
+<p>Antes de falarmos sobre essas tais razões, gostaria de lhe apresentar uma explicação básica sobre o que é o eBPF. Fique à vontade para pular esta seção se você já tem um conhecimento geral sobre o assunto.</p>
+<p>A principal ideia por trás do eBPF é a possibilidade de enviar códigos arbitrários para serem executados em uma máquina virtual rodando dentro do Sistema Operacional. Podemos pensar essa máquina virtual como um conjunto de pseudo-instruções e recursos que compõem os blocos elementares de uma linguagem comum aos Linux. Esse conjunto de instruções será usado para criar programas que interagem com diversos recursos e eventos do Sistema Operacional.</p>
+<p>Vamos descomplicar!</p>
+<p>Para facilitar a compreensão, podemos enxergar essa máquina virtual como um pseudodispositivo programável dentro do Kernel. Agora imagine que esse dispositivo possui &ldquo;sensores&rdquo;, registradores, memória, etc. Além disso, ele é capaz de executar programas que você escreve e que o instruirão sobre o que fazer: o que observar, modificar, descartar, armazenar, relatar e muito mais. No entanto, este dispositivo é <strong>virtual</strong> e roda dentro do Kernel. É basicamente isso!</p>
+<p>Mas você poderia pensar: com esse crachá VIP vários programadores fariam estragos inimagináveis no sistema operacional! Entretetanto, o código eBPF criado e enviado do espaço de usuário para o espaço Kernel é executado com segurança no nosso pseudodispositivo programável porque este comporta um verificador muito robusto e restritivo. Esse verificador será executado sempre que tentarmos carregar novos códigos e garantirá as seguintes condições antes de compilar/executar:</p>
 <ul>
-<li>o programa não possui loops</li>
-<li>não há instruções inacessíveis</li>
-<li>cada estado de registradores e pilha é válido</li>
-<li>registradores com conteúdo não inicializado não são lidos</li>
-<li>e o programa só acessa estruturas apropriadas para seu tipo de programa BPF</li>
+<li>O programa não possui loops;</li>
+<li>Não há instruções inacessíveis;</li>
+<li>Os estados de registradores e pilha são válidos;</li>
+<li>Registradores com conteúdo não inicializado não são lidos;</li>
+<li>O programa só acessa estruturas apropriadas para seu tipo de programa BPF.</li>
 </ul>
-<p>Portanto, essa simples máquina virtual está conectada a alguns <em>hooks</em> específicos dentro do kernel. A quantidade de <em>hooks</em> para eBPF está aumentando a cada dia por causa de suas <a href="https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md">capacidades</a>. Existem muitos casos de uso possíveis para o eBPF, mas vamos nos concentrar em observabilidade para simplificar a explicação. Aqui está um exemplo de fluxo BPF, do <a href="http://www.brendangregg.com/ebpf.html">blog do Brendan Gregg</a>, um arquiteto de desempenho sênior da Netflix (e um dos principais porta vozes dessa tecnologia).</p>
+<p>Portanto, essa simples máquina virtual está conectada a alguns <em>hooks</em> específicos dentro do kernel. A quantidade de <em>hooks</em> para eBPF está aumentando a cada dia por causa de suas <a href="https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md">capacidades</a>. Existem muitos casos de uso possíveis para o eBPF, mas vamos nos concentrar em observabilidade para simplificar a explicação.</p>
+<p>Aqui está um exemplo de fluxo BPF, do <a href="http://www.brendangregg.com/ebpf.html">blog do Brendan Gregg</a>, arquiteto de desempenho sênior da Netflix e um dos principais porta-vozes dessa tecnologia.</p>
 <p><img src="images/linux_ebpf_internals.png" alt=""></p>
 <p>Se o código BPF que você escreve for aceito pelo verificador, ele pode ser anexado a algumas fontes de eventos como as da imagem acima:</p>
 <ul>
-<li>kprobes: rastreamento dinâmico do kernel.</li>
+<li>kprobes: rastreamento dinâmico do Kernel.</li>
 <li>uprobes: rastreamento dinâmico no nível do usuário.</li>
-<li>tracepoints: rastreamento estático do kernel.</li>
+<li>tracepoints: rastreamento estático do Kernel.</li>
 <li>perf_events: amostragem com timestamps e PMCs.</li>
 </ul>
 <p>Depois de medir quaisquer dados dessas fontes de eventos, o programa pode então retornar esses dados ao espaço do usuário para que sejam mostrados ou processados. E isso é eBPF em poucas palavras!</p>
@@ -117,41 +119,42 @@
 <h2 id="razão-nº-1-_às-vezes-apenas-o-ebpf-resolve-o-problema_">Razão nº 1: <em>Às vezes, apenas o eBPF resolve o problema</em></h2>
 <p>Embora possa parecer um exagero, o eBPF pode ser a melhor solução para diagnosticar e resolver vários problemas, devido à especificidade ou sobrecarga de desempenho.</p>
 <p><strong>Rastreamento muito específico</strong></p>
-<p>Esta anedota é um ótimo exemplo de eBPF resolvendo algo muito específico. Tudo começa com o seguinte tweet da engenheira de software Julia Evans:</p>
+<p>Esta anedota é um ótimo exemplo de eBPF resolvendo algo muito específico. Tudo começa com o seguinte tweet da Engenheira de Software Julia Evans:</p>
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">i really wish i had a command line tool that would give me stats on TCP connection lengths on a given port</p>&mdash; 🔎Julia Evans🔍 (@b0rk) <a href="https://twitter.com/b0rk/status/765666624968003584?ref_src=twsrc%5Etfw">August 16, 2016</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<p>Ela estava procurando uma ferramenta cli que pudesse mostrar durações de conexão em uma determinada porta. O raciocínio inicial era verificar de forma fácil e rápida se algumas requisições HTTP eram realmente lentas. Nesta mesma thread de tweets, podemos ver Brendan Gregg sugerindo algumas perf-tools alternativas para obter essas informações.</p>
-<p>Mas o que realmente empolgou foi a <a href="http://www.brendangregg.com/blog/2016-11-30/linux-bcc-tcplife.html">postagem</a> do Brendan Gregg sobre o lançamento do tcplife na coleção <a href="https://github.com/iovisor/bcc">BCC</a> no final daquele ano.</p>
+<p>Ela estava procurando uma ferramenta CLI que pudesse mostrar durações de conexão em uma determinada porta. O raciocínio inicial era verificar de forma fácil e rápida se algumas requisições HTTP eram realmente lentas. Nesta mesma thread de tweets, podemos ver Brendan Gregg sugerindo algumas perf-tools alternativas para obter essas informações.</p>
+<p>Mas o que realmente empolgou foi <a href="http://www.brendangregg.com/blog/2016-11-30/linux-bcc-tcplife.html">esta publicação</a> do Brendan Gregg sobre o lançamento do tcplife na coleção <a href="https://github.com/iovisor/bcc">BCC</a> no final daquele ano.</p>
 <p>Este é um exemplo de saída do tcplife:</p>
 <p><img src="https://lh6.googleusercontent.com/wUr0mIFU0NEcJ6HTaq9-nJLL5kNuFBTEW85vgtOFsDKNty4LoV_fSt3fHINYRldK_VtkVJ287vO9BSugcY5pSFTUptS3E3Vj11xk7EfmMtvzJ3e2yqdNyZSCdwx8uN02JUgAzO7l" alt=""></p>
 <p>Eu gostaria de apontar algumas coisas interessantes sobre isso. O Tcplife mostra alguns dados interessantes, como ID e nome do processo; informações que você não obterá de uma saída do tcpdump, por exemplo. Para evitar sobrecarga de desempenho, essa ferramenta não rastreia pacotes - ela apenas instrumenta eventos que alteram o estado TCP, obtendo timestamps deles. E, claro, a funcionalidade que Evans pediu está presente, e você pode simplesmente verificar as durações de conexão na última coluna!</p>
 <p>Como Brendan Gregg disse em algumas de suas palestras, construir coisas em torno do eBPF é como ter superpoderes ocultos. Você só precisa fazer as perguntas certas para fazer algo interessante sair disso.</p>
 <p><strong>eBPF provê rastreamento (<em>tracing</em>) sem interromper produção.</strong></p>
-<p>Quando eu estava aprendendo mais sobre Linux, e mais especificamente sobre a depuração em <em>user space</em>, strace era um comando muito interessante para jogar em todos os lugares para entender quais chamadas de sistema estão sendo disparadas.</p>
+<p>Quem um dia sentiu curiosidade de se aventurar na compreensão Linux, e mais especificamente sobre a depuração em <em>user space</em>, certamente conhece a ferramenta <em>strace</em>. Este era um comando muito interessante para executar em todos os lugares, visualizando quais chamadas de sistema disparadas para determinadas ações.</p>
 <p><img src="https://lh3.googleusercontent.com/V1q2hd_FzteIRSuwtRs9YkYmQQEjEM3c3otjUhbFoDfRnoWJPrUifvdk0ufWUo4SgE-12Q5rTufqpDEIjhLjYXd0XCgh9N_2A-vXlQ-4naPM8RCZbzuDo5jHJkgKJsRR-zgntn3-" alt=""></p>
-<p>O que as pessoas se esquecem de dizer (ou talvez elas até digam, mas a gente simplesmente esquece) é que strace cria uma enorme sobrecarga no sistema. Brendan Gregg na verdade escreve sobre isso em seu blog <a href="http://www.brendangregg.com/blog/2014-05-11/strace-wow-much-syscall.html">strace Wow Much Syscall</a>. Executar strace para entender algo que está acontecendo em um ambiente de produção com alta carga pode ser catastrófico e pode simplesmente jogar seu servidor no chão. Claro, pode ser OK fazer isso se você tiver redundância ou se o seu servidor estiver inativo de qualquer maneira, mas nem sempre é o caso.</p>
-<p>Em sua postagem, Brendan Gregg sugere algumas outras ferramentas no final, listando perf_events, Sysdig, Ktap, SystemTap e, em uma edição posterior da postagem, perf_trace. Mas esta postagem é de 2014, antes do merge do eBPF no kernel. perf_trace é uma ferramenta completamente aceitável para evitar sobrecarga e fazer rastreamento, mas existe uma ferramenta de <a href="https://github.com/iovisor/bcc/blob/master/tools/trace.py"><em>tracing</em></a> no <a href="https://github.com/iovisor/bcc">BCC</a> que considero mais interessante por causa do ecossistema eBPF (mais sobre isso em uma seção posterior). Vamos verificar um exemplo de uso semelhante de strace e trace.py do BCC. A primeira captura de tela aqui mostra o uso de strace para um comando cat simples; o segundo mostra o uso do trace.py do BCC também para um comando cat simples.</p>
+<p>O que as pessoas se esquecem de dizer (ou talvez até digam, mas a gente simplesmente esquece) é que o <em>strace</em> cria uma enorme sobrecarga no sistema. Até o Brendan Gregg já escreveu sobre isso em seu blog <a href="http://www.brendangregg.com/blog/2014-05-11/strace-wow-much-syscall.html">strace Wow Much Syscall</a>. Executar <em>strace</em> para entender algo que está acontecendo em um ambiente de produção com alta carga pode ser catastrófico e pode simplesmente jogar seu servidor no chão. Claro, pode ser OK fazer isso se você tiver redundância ou se o seu servidor estiver inativo de qualquer maneira, mas nem sempre é o caso.</p>
+<p>Em sua postagem, Brendan Gregg sugere algumas outras ferramentas no final, listando <em>perf_events, Sysdig, Ktap, SystemTap</em> e, em uma edição posterior da postagem, <em>perf_trace</em>. Mas esta postagem é de 2014, antes do merge do eBPF no Kernel. <em>perf_trace</em> é uma ferramenta completamente aceitável para evitar sobrecarga e fazer rastreamento, mas existe uma ferramenta de <a href="https://github.com/iovisor/bcc/blob/master/tools/trace.py"><em>tracing</em></a> no <a href="https://github.com/iovisor/bcc">BCC</a> que considero mais interessante por causa do ecossistema eBPF, ainda voltaremos nesse assunto.</p>
+<p>Vamos verificar um exemplo de uso semelhante de <em>strace</em> e <em>trace.py</em> do BCC. A primeira captura de tela aqui mostra o uso de strace para um comando <em>cat</em> simples; o segundo mostra o uso do <em>trace.py</em> do BCC também para um comando <em>cat</em> simples.</p>
 <p><img src="https://lh3.googleusercontent.com/p4GHY6RAGmM19Chiuli30sIG6tmo6j1FlGd34ft9hfECcxcZHlpp-q4ihxGhigvOq3-NQ4s62q5wxNsmLmi5Gs7SCjFxSi7mzkNkuQ09C0vTAhP8VhKTkHqa35t9wyvbVWHNRlK0" alt=""></p>
 <p><img src="https://lh5.googleusercontent.com/iqaGobzk_pnP-xEFZAJtSLKMkHrcdGXtiaTjBw9Y3YRQ_5-edvl6t95pF0ALCKRieTj0aFoRfWrsoSXNtkHJAZfN6ACVwZ15v6PHeKwAKkdKswo7wUAhogLatEfmj5rgqCJasGrR" alt=""></p>
-<p>Usar trace.py do BCC adiciona um pouco de complexidade porque seu kernel precisa ser recente, você precisa ter as ferramentas BCC instaladas e precisa entender seus argumentos cli. Todavia, terá muito mais desempenho e gerará menos sobrecarga. Além disso, é mais flexível e poderoso, considerando o que investigar enquanto também considera filtros, pagers de buffer e outras configurações de <em>tracing</em>.</p>
+<p>Usar trace.py do BCC adiciona um pouco de complexidade de uso porque seu Kernel precisa ser recente, você precisa ter as ferramentas BCC instaladas e precisa entender seus argumentos CLI. Todavia, terá muito mais desempenho e gerará menos sobrecarga. Além disso, é mais flexível e poderoso, considerando o que investigar enquanto também considera filtros, pagers de buffer e outras configurações de <em>tracing</em>.</p>
 <h2 id="razão-nº-2-_importantes-entidades-estão-usando-o-ebpf_">Razão nº 2: <em>Importantes entidades estão usando o eBPF</em></h2>
-<p>Certamente é um motivo para ficar de olho no eBPF agora. Cilium foi provavelmente a primeira equipe a construir um produto completo em torno de eBPF, na verdade, tanto para observação e controle de rede, mas muitos jogadores de observabilidade têm caminhado nessa direção ultimamente.</p>
+<p>Certamente é um motivo para ficar de olho no eBPF agora. Cilium foi provavelmente a primeira equipe a construir um produto completo em torno de eBPF, investindo principalmente nas áreas de observabilidade e controle de rede, mas muitos jogadores de observabilidade têm caminhado nessa direção ultimamente.</p>
 <p>Em 2017, Brendan Gregg deu muitas palestras sobre o eBPF e, como vimos em sua citação anterior, ele disse que o eBPF estava em um estágio em que tinha muitos superpoderes ocultos e que precisávamos fazer as perguntas certas para extrair grandes funcionalidades dele. Mas, em 2020, acho que é seguro dizer que, com tantas ferramentas prontas para produção utilizando eBPF, estamos descobrindo seus poderes com maestria!</p>
 <p><strong>Cilium e Hubble</strong></p>
-<p><a href="https://cilium.io/">Cilium</a> é um plug-in cni do Kubernetes um tanto popular, baseado inteiramente no eBPF para fornecer e proteger de forma transparente a conectividade de rede e o balanceamento de carga entre as cargas de trabalho de aplicações. Este diagrama em seu <a href="https://github.com/cilium/cilium">repositório Github</a> fornece uma idéia sobre como isso é feito.</p>
+<p><a href="https://cilium.io/">Cilium</a> é um popular plug-in CNI do Kubernetes baseado inteiramente em eBPF. Fornece e protege de forma transparente a conectividade de rede e o balanceamento entre as cargas de trabalho de aplicações. Este diagrama em seu <a href="https://github.com/cilium/cilium">repositório Github</a> apresenta uma idéia sobre como isso é feito.</p>
 <p><img src="https://lh5.googleusercontent.com/XXMBRvWcsn7zs4hH0Ck_99X1hiB1uWPJ0RbDYWm8zJ9lU7ImxaTfG_hKU5ZK0qqtQSX8vBlo3_aPt7cmfbGequTIz4XzohpJFiV6iY40zznC5Uq6Dpf1pTwxyPS75c7oLhSYND8G" alt=""></p>
-<p>Hubble é a solução da Cilium para observação de rede. Ele expõe mapas de comunicação, políticas de segurança sendo aplicadas / acionadas e provê monitoramento e alertas. Ele também oferece um diagrama simples para mostrar sua arquitetura em seu repositório.</p>
+<p>Hubble é a solução da Isovalent, empresa por trás do Cilium, para observação de rede. Ele expõe mapas de comunicação, políticas de segurança sendo aplicadas/acionadas e provê monitoramento e alertas. Ele também oferece um diagrama simples para mostrar sua arquitetura em seu repositório.</p>
 <p><img src="https://lh6.googleusercontent.com/AK4HVPZTa45FEgCkcNGWir4eblkyjmbWXTjHa7lkO73_0ISVjXo-ukj0EmTsWVmncIzTEyYMsxpIA5ZXebcT6oumvb_-CnblMZ1LUaVLrAtvhKbHAFEG51980OFDCNObAwBhpa9j" alt=""></p>
 <p>Este é um exemplo do mapa de serviço do Hubble:</p>
 <p><img src="https://lh5.googleusercontent.com/roeyFXqoa1VPnfshQ5S4u4j5ufPT9hX8CV-2T3PofZFc2u7RhlhVU963ajJg-iBnMkVRmJvzlgc3K1siE9OgMnr-BU7nXFQKfMvfrrpMGieJx2_WKjUf1akW4Cpz1clQDneKiO-_" alt=""></p>
 <p><strong>Prometheus eBPF Exporter</strong></p>
-<p>Cloud Flare abriu o código em 2018 e esse exportador é basicamente o BCC como métricas do Prometheus. Então, em vez de ferramentas CLI que exigiriam que você se conectasse (<em>ssh</em>) a uma máquina para rastrear algo, você escreveria programas eBPF e os transformaria em métricas do Prometheus para verificar nos gráficos do Grafana.</p>
-<p>Exemplos prontamente disponíveis seriam uso de CPU, uso de memória ou uso de CPU Cgroup para verificar as métricas &ldquo;por serviço&rdquo; em sua infraestrutura. (A primeira imagem a seguir é uma visão geral do node_exporter; a segunda é uma visualização &ldquo;por serviço&rdquo; do cAdvisor.)</p>
+<p>CloudFlare abriu o código em 2018 e esse exportador é basicamente o BCC como métricas do Prometheus. Então, em vez de ferramentas CLI que exigiriam que você se conectasse (<em>ssh</em>) a uma máquina para rastrear algo, você escreveria programas eBPF e os transformaria em métricas do Prometheus para verificar nos gráficos do Grafana.</p>
+<p>Exemplos prontamente disponíveis seriam uso de CPU, uso de memória ou uso de CPU Cgroup para verificar as métricas &ldquo;por serviço&rdquo; em sua infraestrutura. (A primeira imagem a seguir é uma visão geral do <em>node_exporter</em>; a segunda é uma visualização &ldquo;por serviço&rdquo; do cAdvisor.)</p>
 <p><img src="https://lh4.googleusercontent.com/Lbjpc779julGtVwkcaQkyAZJXu1RSIUhe6CXq6N_jhC0tcFYiSOwR9suSGc5_yzvVs3FJ6Sym_IiWYWDurZJF6cWTLl4LMOsuFbIcwORuciJ_Y19Dwhff94dpAgYGZzvFgW2nAfj" alt=""></p>
 <p><img src="https://lh4.googleusercontent.com/-h7l045RmB81BBl-F9jP8ZcJy8SOUmDxDF55D3MY8NVznq2Lq4sUQ677SzNM2hUM3FXIdLL8bTLgIETABI9xymr9CW_QmyxE1N8SCANXcmbdC8s10hpv_6MYyL5xuFxEoySnztGU" alt=""></p>
 <p><strong>Falco</strong></p>
-<p>Falco é uma ferramenta de segurança de <em>runtime</em>. Tem como objetivo detectar atividades anômalas em nós e containers. Ele monitora brotamento de processos, por exemplo se um contêiner do MongoDB, que deveria ter apenas o processo do MongoDB rodando nele, também tivesse um segundo processo estranho e inesperado em execução; ou até mesmo atividade de rede, tal como se um Nginx abrisse uma porta inesperada em um servidor. Sysdig também fornece um diagrama de arquitetura útil para entendermos melhor a arquitetura do Falco.</p>
+<p>Falco é uma ferramenta de segurança de <em>runtime</em>. Tem como objetivo detectar anomalias de atividades em nós e <em>containers</em>. Ele monitora brotamento de processos, por exemplo se um contêiner do MongoDB, que deveria ter apenas o processo do MongoDB rodando nele, também tivesse um segundo processo estranho e inesperado em execução; ou até mesmo atividade de rede, tal como se um Nginx abrisse uma porta inesperada em um servidor. Sysdig também fornece um diagrama de arquitetura útil para entendermos melhor a arquitetura do Falco.</p>
 <p><img src="https://lh5.googleusercontent.com/b5zHsYkdXrvsvj-PM1RQm1kNTcFE9LrJ1BKmY1FMp9xFCJk_UM6fjbW1JWrYdktNKLSCmu0EKhZ7rBW_CZxhDA__dFt99eP24jF6SVlPZdrAk1Ltj9_vBsfIz1bGZHiYZfbWpKFS" alt=""></p>
 <p><strong>Algumas outras entidades</strong></p>
 <p>A lista continua com:</p>
@@ -163,14 +166,17 @@
 <li>Inspektor Gadget</li>
 <li>Instana (processos de SO)</li>
 </ul>
-<p>Existem algumas outras soluções bem <strong>fechadas</strong> usando eBPF internamente em empresas como Facebook e Netflix, especialmente para firewall de borda XDP substituindo iptables por uma série de razões. A maioria dos projetos se concentra em observabilidade e controle de rede, mas alguns tentam instrumentar outros dados, como Prometheus eBPF Exporter, Falco e Instana.</p>
-<h2 id="razão-nº-3-_flexibilidade-e-velocidade-em-ter-novas-ferramentas-de-kernel-tracing_">Razão nº 3: <em>Flexibilidade e velocidade em ter novas ferramentas de <em>kernel tracing</em></em></h2>
-<p>Este é provavelmente o motivo mais empolgante para o hype em torno do eBPF, na minha opinião. Podemos argumentar que o eBPF é simplesmente o vencedor do rastreamento de kernel.</p>
-<p>Como Daniel Borkmann, um engenheiro de software da Isovalent e mantenedor do eBPf, disse em sua palestra <a href="https://www.youtube.com/watch?v=99jUcLt3rSk">eBPF and Kubernetes: Little Helper Minions for Scaling Microservices</a>, Linus Torvalds, criador do kernel do Linux, tem uma regra para aceitar e mergir novas ideias malucas no kernel. Cada nova ideia maluca deve ser embrulhada em um pacote de presente que a torne obviamente boa à primeira vista. A ideia é maluca, mas seus argumentos são razoáveis ​​e nada malucos. Esse foi o caso do eBPF, quando eles estavam tentando convencer Torvalds a fazer o merge.</p>
-<p>Temos <code>ftrace</code> e<code> perf_events</code> como exemplos de ferramentas de rastreamento que foram mergidas ao kernel, mas esperar que as coisas sejam mergidas pode ser chato e demorar muito. Ter uma maneira de apenas enviar dinamicamente programas para serem anexados aos componentes internos do kernel acelera imensamente o desenvolvimento das ferramentas de <em>kernel tracing</em>.</p>
-<p>Outra opção é escrever <em>kernel modules</em> personalizados; isso é flexível e dinâmico o suficiente, mas não é seguro porque você pode travar o kernel. Ter a VM do eBPF projetada para executar programas com segurança, sem congelar ou travar o kernel, é uma opção melhor.</p>
+<p>Existem algumas outras soluções bem <strong>fechadas</strong> usando eBPF internamente em empresas como Facebook e Netflix, especialmente para firewall de borda XDP, que substitui o <em>iptables</em> por uma série de razões. A maioria dos projetos se concentra em observabilidade e controle de rede, mas alguns tentam instrumentar outros dados, como Prometheus eBPF Exporter, Falco e Instana.</p>
+<h2 id="razão-nº-3-_flexibilidade-e-velocidade-em-ter-novas-ferramentas-de-kernel-tracing_">Razão nº 3: <em>Flexibilidade e velocidade em ter novas ferramentas de <em>Kernel tracing</em></em></h2>
+<p>Este é provavelmente o motivo mais empolgante para o hype em torno do eBPF. Podemos argumentar que o eBPF é simplesmente o mais recente vencedor do rastreamento de Kernel.</p>
+<p>Como Daniel Borkmann, engenheiro da Isovalent e mantenedor do eBPf, disse em sua palestra <a href="https://www.youtube.com/watch?v=99jUcLt3rSk">eBPF and Kubernetes: Little Helper Minions for Scaling Microservices</a>: Linus Torvalds, criador do kernel do Linux, tem uma regra para aceitar e incluir novas ideias malucas no kernel. Cada nova ideia maluca deve ser embrulhada em um pacote de presente que a torne obviamente boa à primeira vista. A ideia é maluca, mas seus argumentos são razoáveis e nada malucos. Esse foi o caso do eBPF, quando eles estavam tentando emplacar o eBPF no Kernel.</p>
+<p>Temos <code>ftrace</code> e<code> perf_events</code> como exemplos de ferramentas de rastreamento que foram integradas ao Kernel, mas esperar que os <em>merge requests</em> sejam aceitos pode ser tedioso e demorar muito. Ter uma maneira de apenas enviar dinamicamente programas para serem anexados aos componentes internos do Kernel acelera imensamente o desenvolvimento das ferramentas de <em>kernel tracing</em>, além de reduzir consideravelmente a complexidade do SO ao longo do tempo, já que menos coisas farão parte do código principal.</p>
+<p>Outra opção é escrever <em>Kernel modules</em> personalizados. Isso pode até ser viável em diversos cenários, entretanto o mundo super-dinâmico que vivemos hoje, às vezes com milhares de <em>containers</em> sendo executados, nascendo e morrendo, com regras de roteamento, políticas de acesso e controle de tráfego pode ser demais para os conhecidos módulos do Kernel. Ter a VM do eBPF projetada para executar programas com segurança, sem congelar ou travar seu sistema operacional, é claramente uma opção melhor.</p>
 <h2 id="conclusão">Conclusão</h2>
-<p>Neste post, tentei mostrar brevemente o que empolga no eBPF e algumas das razões para o hype contínuo no cenário de observabilidade. Acho importante mostrar que já temos ferramentas para usá-lo em produção e que eBPF está maduro o suficiente para isso. Como Brendan Gregg disse em uma de suas palestras, você não precisa necessariamente saber tudo sobre o eBPF para ficar animado com ele, mas é bom entender os recursos que ele traz para à mesa.</p>
+<p>Neste post, tentamos mostrar brevemente o que empolga no eBPF e algumas das razões para o hype contínuo no cenário de observabilidade. Acho importante mostrar que já temos ferramentas para usá-lo em produção e que eBPF está maduro o suficiente para isso. E para finalizar temos outra frase do Brendan Gregg:</p>
+<blockquote>
+<p>&ldquo;Você não precisa necessariamente saber tudo sobre o eBPF para ficar animado com ele, mas é bom entender os recursos que ele traz para à mesa&rdquo;.</p>
+</blockquote>
 <p>E é extraordinário termos tantas pessoas criando abstrações em torno dele para torná-lo mais fácil de usar!</p>
                 </section>
             </article>
