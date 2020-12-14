@@ -5,7 +5,7 @@ baseurl = "https://ebpfbr.org/"
 languageCode = "en"
 title = "eBPF Brasil"
 theme = "hugo-theme-cactus-plus"
-googleAnalytics = ""
+googleAnalytics = "G-N5G4RWKDZR"
 
 # Set the value to true if your site include CJK (Chinese, Japanese, and Korean languages) characters
 hasCJKLanguage = false
@@ -30,7 +30,7 @@ hasCJKLanguage = false
 	useDescriptionReplaceSummary = false
 
 
-	enableGoogleAnalytics = false
+	enableGoogleAnalytics = true
 	enableBaiduAnalytics = false
 	# Set the value to your baidu analysis code if you want to use baidu analytics
 	baiduAnalytics = 'your_baidu_analysis_code'
